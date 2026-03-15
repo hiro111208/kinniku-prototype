@@ -8,6 +8,7 @@ This directory contains the frontend application.
 - React
 - Vite
 - Material UI
+- React Router
 
 ## Directory Structure
 

@@ -6,22 +6,21 @@ This ER diagram is derived from the current MVP requirements and describes the c
 erDiagram
 
   USER {
-    string id
+    int id PK AI NOT NULL
     string name
     string gender
     float bodyweight
-    string training_experience
   }
 
   EXERCISE {
-    string id
+    int id PK AI NOT NULL
     string name
     boolean is_builtin
     string created_by_user_id
   }
 
   TRAINING_BLOCK {
-    string id
+    int id PK AI NOT NULL
     string user_id
     string name
     date start_date
@@ -30,21 +29,21 @@ erDiagram
   }
 
   TRAINING_DAY_TEMPLATE {
-    string id
+    int id PK AI NOT NULL
     string? training_block_id         // nullable
     string label          // e.g. Day 1, Squat + Bench
     int? day_order         // position within the block/week, nullable
   }
 
   TRAINING_DAY_EXERCISE {
-    string id
+    int id PK AI NOT NULL
     string training_day_template_id
     string exercise_id
     int order_index
   }
 
   TRAINING_DAY_SET_PRESCRIPTION {
-    string id
+    int id PK AI NOT NULL
     string training_day_exercise_id
     int set_order
     int reps_planned

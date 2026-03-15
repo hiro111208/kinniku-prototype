@@ -25,7 +25,6 @@
     - Name or nickname.
     - Gender.
     - Bodyweight.
-    - Training experience (novice / intermediate / advanced).
 - **Initial goals**
   - **Must** allow setting current estimated 1RM and goal 1RM for:
     - Squat

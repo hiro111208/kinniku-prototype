@@ -7,6 +7,7 @@
   - React
   - Vite
   - Material-UI
+  - React Router
 
 - Backend
   - Firebase
