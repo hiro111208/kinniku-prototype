@@ -3,8 +3,11 @@
 - **US-01: Sign up**
   - As a **new user**, I want to create an account using my email and password so that I can securely start using Kinniku.
 
-  - [ ] **T-01-01: Decide signup data model**
-    - Confirm required fields for signup (email, password, display name) and how they map to the `USER` entity (id, name, gender, bodyweight) defined in the ER diagram and requirements.
+  - [x] **T-01-01: Decide signup data model**
+    - Signup will require **email** and **password** for authentication plus an optional **display name**. Firebase Auth will own `email` and the password hash, while the app-level `USER` profile will store:
+      - `id`: Firebase `uid`
+      - `name`: display name (or derived from email before onboarding)
+      - `gender`, `bodyweight`, `training_experience`: collected/updated later during onboarding and profile edits, not required at initial signup.
 
   - [ ] **T-01-02: Implement signup UI**
     - Create a signup page/component in React with Material-UI inputs for email, password, and display name, plus a primary submit button.
