@@ -9,8 +9,8 @@
       - `name`: display name (or derived from email before onboarding)
       - `gender`, `bodyweight`, `training_experience`: collected/updated later during onboarding and profile edits, not required at initial signup.
 
-  - [ ] **T-01-02: Implement signup UI**
-    - Create a signup page/component in React with Material-UI inputs for email, password, and display name, plus a primary submit button.
+  - [x] **T-01-02: Implement signup UI**
+    - Implemented `SignupPage` with Material-UI fields for name, display name, password and confirm password, plus primary CTA and supporting layout mirroring the signup design. `App` now renders this page.
 
   - [ ] **T-01-03: Add client-side validation**
     - Validate email format, minimum password strength, and required fields; show clear inline error messages.
@@ -24,10 +24,17 @@
   - [ ] **T-01-06: Initialize basic profile data**
     - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, and training experience, matching the onboarding/profile requirements.
 
-  - [ ] **T-01-07: Handle post-signup flow**
-    - Keep the user logged in after signup and redirect them to the appropriate first screen (e.g., onboarding/profile or training block setup).
+  - [ ] **T-01-07: Set up core routes with React Router**
+    - Introduce React Router in the frontend and define at least these routes:
+      - `/signup` → `SignupPage`
+      - `/login` → `LoginPage` (initially a simple placeholder)
+      - `/` → landing or dashboard page (can initially be `HomePage`).
+    - Ensure navigation between signup and login (e.g., “Sign in instead” link) uses React Router `Link` components instead of plain anchors.
 
-  - [ ] **T-01-08: Basic error handling & logging**
+  - [ ] **T-01-08: Handle post-signup flow with navigation**
+    - After successful signup, use React Router navigation (e.g., `useNavigate`) to redirect the user to the correct first screen (onboarding/profile or training plans list).
+
+  - [ ] **T-01-09: Basic error handling & logging**
     - Map common Firebase errors (e.g., email already in use, weak password) to friendly messages and ensure no sensitive data is logged, aligning with privacy requirements.
 
 - **US-02: Log in**

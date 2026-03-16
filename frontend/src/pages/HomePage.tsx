@@ -3,7 +3,7 @@ import '../App.css';
 import reactLogo from '../assets/react.svg';
 import viteLogo from '../assets/vite.svg';
 
-function HomePage() {
+const HomePage = () => {
   const [count, setCount] = useState(0);
 
   return (
@@ -95,6 +95,6 @@ function HomePage() {
       <section id="spacer"></section>
     </>
   );
-}
+};
 
 export default HomePage;

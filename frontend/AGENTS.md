@@ -21,7 +21,7 @@ This directory contains the frontend application.
 
 ## Component Guidelines
 
-- Use functional components
+- Use functional components (ES6 arrow functions)
 - Use React hooks
 - Keep components small and focused
 - Extract reusable UI into `components/`

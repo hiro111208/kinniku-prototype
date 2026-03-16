@@ -1,8 +1,17 @@
-import './App.css';
-import HomePage from './pages/HomePage.tsx';
+import { ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import SignupPage from './pages/SignupPage.tsx';
+import { createAppTheme } from './theme.ts';
 
 function App() {
-  return <HomePage />;
+  const prefersDark = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = createAppTheme(prefersDark ? 'dark' : 'light');
+
+  return (
+    <ThemeProvider theme={theme}>
+      <SignupPage />
+    </ThemeProvider>
+  );
 }
 
 export default App;
