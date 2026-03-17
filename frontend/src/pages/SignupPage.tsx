@@ -1,8 +1,75 @@
 import { Box, Button, Link, Paper, Stack, TextField, Typography } from '@mui/material';
+import { useState, type FormEvent } from 'react';
 
 const SignupPage = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  const [touched, setTouched] = useState({
+    firstName: false,
+    lastName: false,
+    displayName: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+  const MIN_PASSWORD_LENGTH = 8;
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const errors = {
+    firstName: !firstName.trim() ? 'First name is required' : '',
+    displayName: !displayName.trim() ? 'Display name is required' : '',
+    email: !email.trim()
+      ? 'Email is required'
+      : !EMAIL_REGEX.test(email.trim())
+        ? 'Email is invalid'
+        : '',
+    password: !password
+      ? 'Password is required'
+      : password.length < MIN_PASSWORD_LENGTH
+        ? `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+        : '',
+    confirmPassword: !confirmPassword
+      ? 'Please confirm your password'
+      : confirmPassword !== password
+        ? 'Passwords do not match'
+        : '',
+  };
+
+  const handleBlur = (field: keyof typeof touched) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    setTouched({
+      firstName: true,
+      lastName: true,
+      displayName: true,
+      email: true,
+      password: true,
+      confirmPassword: true,
+    });
+
+    const hasErrors = Object.values(errors).some(Boolean);
+
+    if (hasErrors) {
+      return;
+    }
+
+    // T-01-04 / T-01-05 will add real submit logic (Firebase) here.
+  };
+
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
       sx={{
         minHeight: '100vh',
         display: 'flex',
@@ -37,8 +104,24 @@ const SignupPage = () => {
               </Typography>
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField fullWidth label="First name" size="small" />
-              <TextField fullWidth label="Last name" size="small" />
+              <TextField
+                fullWidth
+                label="First name"
+                size="small"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                onBlur={() => handleBlur('firstName')}
+                error={touched.firstName && !!errors.firstName}
+                helperText={touched.firstName ? errors.firstName : ''}
+              />
+              <TextField
+                fullWidth
+                label="Last name"
+                size="small"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+                onBlur={() => handleBlur('lastName')}
+              />
             </Stack>
           </Stack>
 
@@ -49,7 +132,35 @@ const SignupPage = () => {
                 Choose your display name
               </Typography>
             </Stack>
-            <TextField fullWidth label="Display name" size="small" />
+            <TextField
+              fullWidth
+              label="Display name"
+              size="small"
+              value={displayName}
+              onChange={(event) => setDisplayName(event.target.value)}
+              onBlur={() => handleBlur('displayName')}
+              error={touched.displayName && !!errors.displayName}
+              helperText={touched.displayName ? errors.displayName : ''}
+            />
+          </Stack>
+
+          {/* Email field*/}
+          <Stack spacing={1}>
+            <Stack direction="row" justifyContent="space-between" alignItems="left">
+              <Typography variant="subtitle1" fontWeight={500}>
+                Enter your email
+              </Typography>
+            </Stack>
+            <TextField
+              fullWidth
+              label="Email"
+              size="small"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              onBlur={() => handleBlur('email')}
+              error={touched.email && !!errors.email}
+              helperText={touched.email ? errors.email : ''}
+            />
           </Stack>
 
           {/* Password fields */}
@@ -60,8 +171,28 @@ const SignupPage = () => {
               </Typography>
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField fullWidth label="Password" type="password" size="small" />
-              <TextField fullWidth label="Confirm" type="password" size="small" />
+              <TextField
+                fullWidth
+                label="Password"
+                type="password"
+                size="small"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                onBlur={() => handleBlur('password')}
+                error={touched.password && !!errors.password}
+                helperText={touched.password ? errors.password : ''}
+              />
+              <TextField
+                fullWidth
+                label="Confirm"
+                type="password"
+                size="small"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                onBlur={() => handleBlur('confirmPassword')}
+                error={touched.confirmPassword && !!errors.confirmPassword}
+                helperText={touched.confirmPassword ? errors.confirmPassword : ''}
+              />
             </Stack>
             <Typography variant="caption" color="text.secondary">
               Use 8 or more characters with a mix of letters, numbers &amp; symbols.
@@ -73,7 +204,9 @@ const SignupPage = () => {
             <Link href="#" underline="hover" variant="body2">
               Sign in instead
             </Link>
-            <Button variant="contained">Next</Button>
+            <Button type="submit" variant="contained">
+              Next
+            </Button>
           </Stack>
         </Stack>
       </Paper>

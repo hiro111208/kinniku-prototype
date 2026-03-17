@@ -12,8 +12,8 @@
   - [x] **T-01-02: Implement signup UI**
     - Implemented `SignupPage` with Material-UI fields for name, display name, password and confirm password, plus primary CTA and supporting layout mirroring the signup design. `App` now renders this page.
 
-  - [ ] **T-01-03: Add client-side validation**
-    - Validate email format, minimum password strength, and required fields; show clear inline error messages.
+  - [x] **T-01-03: Add client-side validation**
+    - Added basic form state and validation to `SignupPage` for required fields, password length, and matching confirmation, with inline error messages and a guarded submit handler.
 
   - [ ] **T-01-04: Configure Firebase email/password auth**
     - Set up Firebase project configuration in the frontend and enable email/password auth in Firebase per the security and privacy requirements.
