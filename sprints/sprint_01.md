@@ -21,7 +21,7 @@
   - [x] **T-01-05: Connect signup form to Firebase**
     - Wired `SignupPage` to `authService.signUp`; added loading state (disabled button, spinner), success/error handling, and friendly messages for common Firebase Auth error codes (email-already-in-use, weak-password, invalid-email, etc.).
 
-  - [ ] **T-01-06: Initialize basic profile data**
+  - [x] **T-01-06: Initialize basic profile data**
     - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, matching the onboarding/profile requirements.
 
   - [ ] **T-01-07: Set up core routes with React Router**

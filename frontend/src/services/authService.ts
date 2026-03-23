@@ -1,7 +1,16 @@
-import { createUserWithEmailAndPassword, updateProfile, type UserCredential } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  deleteUser,
+  updateProfile,
+  type UserCredential,
+} from 'firebase/auth';
 import { auth } from './firebase';
+import { createInitialUserProfile } from './userProfileService';
 
 type AuthError = { code?: string };
+
+const PROFILE_SAVE_ERROR_MESSAGE =
+  'Could not save your profile. Check your connection and try again.';
 
 export type SignUpResult =
   | { success: true; user: UserCredential }
@@ -29,11 +38,25 @@ export const signUp = async (
 ): Promise<SignUpResult> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+    const user = userCredential.user;
+    const resolvedName =
+      displayName?.trim() || email.trim().split('@')[0] || 'User';
 
-    if (displayName?.trim() && userCredential.user) {
-      await updateProfile(userCredential.user, {
-        displayName: displayName.trim(),
+    await updateProfile(user, { displayName: resolvedName });
+
+    try {
+      await createInitialUserProfile(user.uid, {
+        name: resolvedName,
+        email: email.trim(),
       });
+    } catch (profileError) {
+      const profileCode = (profileError as AuthError)?.code;
+      await deleteUser(user).catch(() => {
+        /* best-effort rollback */
+      });
+      const message =
+        profileCode === 'permission-denied' ? PROFILE_SAVE_ERROR_MESSAGE : DEFAULT_ERROR_MESSAGE;
+      return { success: false, message };
     }
 
     return { success: true, user: userCredential };
