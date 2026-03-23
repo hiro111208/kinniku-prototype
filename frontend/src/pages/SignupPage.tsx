@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState, type FormEvent } from 'react';
+import { Link as RouterLink } from 'react-router';
 import { signUp } from '../services/authService';
 
 const SignupPage = () => {
@@ -233,7 +234,7 @@ const SignupPage = () => {
 
           {/* Footer actions */}
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Link href="#" underline="hover" variant="body2">
+            <Link component={RouterLink} to="/login" underline="hover" variant="body2">
               Sign in instead
             </Link>
             <Button

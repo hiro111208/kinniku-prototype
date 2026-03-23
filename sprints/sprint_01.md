@@ -24,7 +24,7 @@
   - [x] **T-01-06: Initialize basic profile data**
     - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, matching the onboarding/profile requirements.
 
-  - [ ] **T-01-07: Set up core routes with React Router**
+  - [x] **T-01-07: Set up core routes with React Router**
     - Introduce React Router in the frontend and define at least these routes:
       - `/signup` → `SignupPage`
       - `/login` → `LoginPage` (initially a simple placeholder)
