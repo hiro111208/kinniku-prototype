@@ -7,7 +7,7 @@
     - Signup will require **email** and **password** for authentication plus an optional **display name**. Firebase Auth will own `email` and the password hash, while the app-level `USER` profile will store:
       - `id`: Firebase `uid`
       - `name`: display name (or derived from email before onboarding)
-      - `gender`, `bodyweight`, `training_experience`: collected/updated later during onboarding and profile edits, not required at initial signup.
+      - `gender`, `bodyweight`: collected/updated later during onboarding and profile edits, not required at initial signup.
 
   - [x] **T-01-02: Implement signup UI**
     - Implemented `SignupPage` with Material-UI fields for name, display name, password and confirm password, plus primary CTA and supporting layout mirroring the signup design. `App` now renders this page.
@@ -15,14 +15,14 @@
   - [x] **T-01-03: Add client-side validation**
     - Added basic form state and validation to `SignupPage` for required fields, password length, and matching confirmation, with inline error messages and a guarded submit handler.
 
-  - [ ] **T-01-04: Configure Firebase email/password auth**
+  - [x] **T-01-04: Configure Firebase email/password auth**
     - Set up Firebase project configuration in the frontend and enable email/password auth in Firebase per the security and privacy requirements.
 
-  - [ ] **T-01-05: Connect signup form to Firebase**
-    - On submit, call Firebase to create the user account, handle loading states, and show success/failure feedback based on Firebase error codes.
+  - [x] **T-01-05: Connect signup form to Firebase**
+    - Wired `SignupPage` to `authService.signUp`; added loading state (disabled button, spinner), success/error handling, and friendly messages for common Firebase Auth error codes (email-already-in-use, weak-password, invalid-email, etc.).
 
   - [ ] **T-01-06: Initialize basic profile data**
-    - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, and training experience, matching the onboarding/profile requirements.
+    - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, matching the onboarding/profile requirements.
 
   - [ ] **T-01-07: Set up core routes with React Router**
     - Introduce React Router in the frontend and define at least these routes:

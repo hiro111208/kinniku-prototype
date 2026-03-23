@@ -1,0 +1,12 @@
+{
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.defaultFormatter": null,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": false,
+      "source.fixAll.eslint": false,
+      "source.organizeImports": false
+    }
+  }
+}

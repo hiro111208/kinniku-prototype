@@ -1,5 +1,16 @@
-import { Box, Button, Link, Paper, Stack, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Link,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useState, type FormEvent } from 'react';
+import { signUp } from '../services/authService';
 
 const SignupPage = () => {
   const [firstName, setFirstName] = useState('');
@@ -8,6 +19,8 @@ const SignupPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const [touched, setTouched] = useState({
     firstName: false,
@@ -45,8 +58,9 @@ const SignupPage = () => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setSubmitError(null);
     setTouched({
       firstName: true,
       lastName: true,
@@ -62,7 +76,19 @@ const SignupPage = () => {
       return;
     }
 
-    // T-01-04 / T-01-05 will add real submit logic (Firebase) here.
+    setIsSubmitting(true);
+    const name =
+      [firstName.trim(), lastName.trim()].filter(Boolean).join(' ') || displayName.trim();
+    const result = await signUp(email.trim(), password, name || displayName.trim() || undefined);
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      // T-01-08 will add redirect to onboarding/plans
+      return;
+    }
+
+    setSubmitError(result.message);
   };
 
   return (
@@ -199,13 +225,24 @@ const SignupPage = () => {
             </Typography>
           </Stack>
 
+          {submitError != null && (
+            <Alert severity="error" onClose={() => setSubmitError(null)}>
+              {submitError}
+            </Alert>
+          )}
+
           {/* Footer actions */}
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Link href="#" underline="hover" variant="body2">
               Sign in instead
             </Link>
-            <Button type="submit" variant="contained">
-              Next
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={isSubmitting}
+              startIcon={isSubmitting ? <CircularProgress size={16} color="inherit" /> : undefined}
+            >
+              {isSubmitting ? 'Creating account…' : 'Next'}
             </Button>
           </Stack>
         </Stack>

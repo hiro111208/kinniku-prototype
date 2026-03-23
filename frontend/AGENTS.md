@@ -47,6 +47,7 @@ This directory contains the frontend application.
 - Prefer TypeScript types over `any`
 - Avoid large components (>200 lines)
 - Extract logic into hooks
+- Use const and arrow functions
 
 ## Naming Conventions
 

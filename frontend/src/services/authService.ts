@@ -1,0 +1,46 @@
+import { createUserWithEmailAndPassword, updateProfile, type UserCredential } from 'firebase/auth';
+import { auth } from './firebase';
+
+type AuthError = { code?: string };
+
+export type SignUpResult =
+  | { success: true; user: UserCredential }
+  | { success: false; message: string };
+
+const AUTH_ERROR_MESSAGES: Record<string, string> = {
+  'auth/email-already-in-use': 'This email is already registered. Sign in instead.',
+  'auth/weak-password':
+    'Password is too weak. Use 8+ characters with letters, numbers, and symbols.',
+  'auth/invalid-email': 'Please enter a valid email address.',
+  'auth/too-many-requests': 'Too many attempts. Please try again later.',
+  'auth/operation-not-allowed': 'Email/password sign-up is not enabled. Contact support.',
+  'auth/network-request-failed': 'Network error. Check your connection and try again.',
+};
+
+const DEFAULT_ERROR_MESSAGE = 'Something went wrong. Please try again.';
+
+export const getAuthErrorMessage = (code: string): string =>
+  AUTH_ERROR_MESSAGES[code] ?? DEFAULT_ERROR_MESSAGE;
+
+export const signUp = async (
+  email: string,
+  password: string,
+  displayName?: string
+): Promise<SignUpResult> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+
+    if (displayName?.trim() && userCredential.user) {
+      await updateProfile(userCredential.user, {
+        displayName: displayName.trim(),
+      });
+    }
+
+    return { success: true, user: userCredential };
+  } catch (error) {
+    const fbError = error as AuthError;
+    const message =
+      fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;
+    return { success: false, message };
+  }
+};
