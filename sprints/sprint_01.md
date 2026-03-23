@@ -34,7 +34,7 @@
   - [x] **T-01-08: Handle post-signup flow with navigation**
     - After successful signup, use React Router navigation (e.g., `useNavigate`) to redirect the user to the correct first screen (onboarding/profile or training plans list).
 
-  - [ ] **T-01-09: Basic error handling & logging**
+  - [x] **T-01-09: Basic error handling & logging**
     - Map common Firebase errors (e.g., email already in use, weak password) to friendly messages and ensure no sensitive data is logged, aligning with privacy requirements.
 
 - **US-02: Log in**
