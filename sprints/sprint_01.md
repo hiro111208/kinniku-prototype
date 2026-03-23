@@ -31,7 +31,7 @@
       - `/` → landing or dashboard page (can initially be `HomePage`).
     - Ensure navigation between signup and login (e.g., “Sign in instead” link) uses React Router `Link` components instead of plain anchors.
 
-  - [ ] **T-01-08: Handle post-signup flow with navigation**
+  - [x] **T-01-08: Handle post-signup flow with navigation**
     - After successful signup, use React Router navigation (e.g., `useNavigate`) to redirect the user to the correct first screen (onboarding/profile or training plans list).
 
   - [ ] **T-01-09: Basic error handling & logging**

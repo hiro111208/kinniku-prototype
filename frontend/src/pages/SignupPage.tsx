@@ -10,10 +10,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useState, type FormEvent } from 'react';
-import { Link as RouterLink } from 'react-router';
+import { Link as RouterLink, useNavigate } from 'react-router';
 import { signUp } from '../services/authService';
 
+const POST_SIGNUP_PATH = '/';
+
 const SignupPage = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -85,7 +88,7 @@ const SignupPage = () => {
     setIsSubmitting(false);
 
     if (result.success) {
-      // T-01-08 will add redirect to onboarding/plans
+      navigate(POST_SIGNUP_PATH, { replace: true });
       return;
     }
 
