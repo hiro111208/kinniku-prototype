@@ -3,28 +3,38 @@
 - **US-01: Sign up**
   - As a **new user**, I want to create an account using my email and password so that I can securely start using Kinniku.
 
-  - [ ] **T-01-01: Decide signup data model**
-    - Confirm required fields for signup (email, password, display name) and how they map to the `USER` entity (id, name, gender, bodyweight) defined in the ER diagram and requirements.
+  - [x] **T-01-01: Decide signup data model**
+    - Signup will require **email** and **password** for authentication plus an optional **display name**. Firebase Auth will own `email` and the password hash, while the app-level `USER` profile will store:
+      - `id`: Firebase `uid`
+      - `name`: display name (or derived from email before onboarding)
+      - `gender`, `bodyweight`: collected/updated later during onboarding and profile edits, not required at initial signup.
 
-  - [ ] **T-01-02: Implement signup UI**
-    - Create a signup page/component in React with Material-UI inputs for email, password, and display name, plus a primary submit button.
+  - [x] **T-01-02: Implement signup UI**
+    - Implemented `SignupPage` with Material-UI fields for name, display name, password and confirm password, plus primary CTA and supporting layout mirroring the signup design. `App` now renders this page.
 
-  - [ ] **T-01-03: Add client-side validation**
-    - Validate email format, minimum password strength, and required fields; show clear inline error messages.
+  - [x] **T-01-03: Add client-side validation**
+    - Added basic form state and validation to `SignupPage` for required fields, password length, and matching confirmation, with inline error messages and a guarded submit handler.
 
-  - [ ] **T-01-04: Configure Firebase email/password auth**
+  - [x] **T-01-04: Configure Firebase email/password auth**
     - Set up Firebase project configuration in the frontend and enable email/password auth in Firebase per the security and privacy requirements.
 
-  - [ ] **T-01-05: Connect signup form to Firebase**
-    - On submit, call Firebase to create the user account, handle loading states, and show success/failure feedback based on Firebase error codes.
+  - [x] **T-01-05: Connect signup form to Firebase**
+    - Wired `SignupPage` to `authService.signUp`; added loading state (disabled button, spinner), success/error handling, and friendly messages for common Firebase Auth error codes (email-already-in-use, weak-password, invalid-email, etc.).
 
-  - [ ] **T-01-06: Initialize basic profile data**
-    - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, and training experience, matching the onboarding/profile requirements.
+  - [x] **T-01-06: Initialize basic profile data**
+    - After successful signup, create a corresponding `USER` record (or profile document) storing at least name, gender, bodyweight, matching the onboarding/profile requirements.
 
-  - [ ] **T-01-07: Handle post-signup flow**
-    - Keep the user logged in after signup and redirect them to the appropriate first screen (e.g., onboarding/profile or training block setup).
+  - [x] **T-01-07: Set up core routes with React Router**
+    - Introduce React Router in the frontend and define at least these routes:
+      - `/signup` → `SignupPage`
+      - `/login` → `LoginPage` (initially a simple placeholder)
+      - `/` → landing or dashboard page (can initially be `HomePage`).
+    - Ensure navigation between signup and login (e.g., “Sign in instead” link) uses React Router `Link` components instead of plain anchors.
 
-  - [ ] **T-01-08: Basic error handling & logging**
+  - [x] **T-01-08: Handle post-signup flow with navigation**
+    - After successful signup, use React Router navigation (e.g., `useNavigate`) to redirect the user to the correct first screen (onboarding/profile or training plans list).
+
+  - [x] **T-01-09: Basic error handling & logging**
     - Map common Firebase errors (e.g., email already in use, weak password) to friendly messages and ensure no sensitive data is logged, aligning with privacy requirements.
 
 - **US-02: Log in**

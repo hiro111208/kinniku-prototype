@@ -21,7 +21,7 @@ This directory contains the frontend application.
 
 ## Component Guidelines
 
-- Use functional components
+- Use functional components (ES6 arrow functions)
 - Use React hooks
 - Keep components small and focused
 - Extract reusable UI into `components/`
@@ -47,6 +47,7 @@ This directory contains the frontend application.
 - Prefer TypeScript types over `any`
 - Avoid large components (>200 lines)
 - Extract logic into hooks
+- Use const and arrow functions
 
 ## Naming Conventions
 

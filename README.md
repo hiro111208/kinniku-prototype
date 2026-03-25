@@ -1,1 +1,0 @@
-# kinniku-prototype
