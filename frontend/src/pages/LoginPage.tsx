@@ -10,10 +10,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useState, type FormEvent } from 'react';
-import { Link as RouterLink } from 'react-router';
+import { Link as RouterLink, useNavigate } from 'react-router';
 import { login } from '../services/authService';
 
+const POST_LOGIN_PATH = '/';
+
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +31,10 @@ const LoginPage = () => {
       const result = await login(email, password);
       if (!result.success) {
         setSubmitError(result.message);
+        return;
       }
+
+      navigate(POST_LOGIN_PATH, { replace: true });
     } finally {
       setIsSubmitting(false);
     }

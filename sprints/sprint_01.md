@@ -52,7 +52,7 @@
   - [x] **T-01-13: Wire login form to auth**
     - Submit calls `authService.login`, shows inline error UI on failure, and clears loading state on completion.
 
-  - [ ] **T-01-14: Navigate after login**
+  - [x] **T-01-14: Navigate after login**
     - On success, redirect with React Router navigation (MVP: send user to `/`).
 
 - **US-03: Log out**
