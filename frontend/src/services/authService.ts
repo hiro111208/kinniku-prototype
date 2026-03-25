@@ -33,6 +33,10 @@ const AUTH_ERROR_MESSAGES: Record<string, string> = {
   'auth/user-disabled': 'This account has been disabled. Contact support.',
   'auth/internal-error': 'Something went wrong on our end. Please try again.',
   'auth/invalid-credential': 'Invalid credentials. Check your email and password.',
+  'auth/user-not-found': 'No account found for this email. Create an account instead.',
+  'auth/wrong-password': 'Incorrect password. Please try again.',
+  'auth/account-exists-with-different-credential':
+    'This account uses a different sign-in method. Please sign in another way.',
 };
 
 const PROFILE_ERROR_MESSAGES: Record<string, string> = {

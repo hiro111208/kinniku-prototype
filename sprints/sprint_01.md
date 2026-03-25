@@ -46,7 +46,7 @@
   - [x] **T-01-11: Add Firebase login service**
     - Implement `authService.login` (Firebase `signInWithEmailAndPassword`) returning a typed result.
 
-  - [ ] **T-01-12: Handle Firebase login errors**
+  - [x] **T-01-12: Handle Firebase login errors**
     - Map common Firebase login error codes to friendly messages; avoid sensitive output.
 
   - [ ] **T-01-13: Wire login form to auth**
