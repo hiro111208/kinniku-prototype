@@ -43,7 +43,7 @@
   - [x] **T-01-10: Implement login UI**
     - Create `LoginPage` with email/password inputs, validation, and loading state.
 
-  - [ ] **T-01-11: Add Firebase login service**
+  - [x] **T-01-11: Add Firebase login service**
     - Implement `authService.login` (Firebase `signInWithEmailAndPassword`) returning a typed result.
 
   - [ ] **T-01-12: Handle Firebase login errors**

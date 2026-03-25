@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   deleteUser,
+  signInWithEmailAndPassword,
   updateProfile,
   type UserCredential,
 } from 'firebase/auth';
@@ -14,6 +15,10 @@ const PROFILE_SAVE_ERROR_MESSAGE =
   'Could not save your profile. Check your connection and try again.';
 
 export type SignUpResult =
+  | { success: true; user: UserCredential }
+  | { success: false; message: string };
+
+export type LoginResult =
   | { success: true; user: UserCredential }
   | { success: false; message: string };
 
@@ -77,6 +82,19 @@ export const signUp = async (
     return { success: true, user: userCredential };
   } catch (error) {
     logAppError('signUp:auth', error);
+    const fbError = error as AuthError;
+    const message =
+      fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;
+    return { success: false, message };
+  }
+};
+
+export const login = async (email: string, password: string): Promise<LoginResult> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+    return { success: true, user: userCredential };
+  } catch (error) {
+    logAppError('login:auth', error);
     const fbError = error as AuthError;
     const message =
       fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;
