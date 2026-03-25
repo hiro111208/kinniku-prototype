@@ -40,7 +40,7 @@
 - **US-02: Log in**
   - As a **registered user**, I want to log in with my email and password so that I can access my personal training plans.
 
-  - [ ] **T-01-10: Implement login UI**
+  - [x] **T-01-10: Implement login UI**
     - Create `LoginPage` with email/password inputs, validation, and loading state.
 
   - [ ] **T-01-11: Add Firebase login service**
