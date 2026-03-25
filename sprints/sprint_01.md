@@ -49,7 +49,7 @@
   - [x] **T-01-12: Handle Firebase login errors**
     - Map common Firebase login error codes to friendly messages; avoid sensitive output.
 
-  - [ ] **T-01-13: Wire login form to auth**
+  - [x] **T-01-13: Wire login form to auth**
     - Submit calls `authService.login`, shows inline error UI on failure, and clears loading state on completion.
 
   - [ ] **T-01-14: Navigate after login**

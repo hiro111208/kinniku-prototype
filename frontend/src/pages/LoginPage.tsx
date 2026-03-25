@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useState, type FormEvent } from 'react';
 import { Link as RouterLink } from 'react-router';
+import { login } from '../services/authService';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -24,10 +25,10 @@ const LoginPage = () => {
 
     setIsSubmitting(true);
     try {
-      // TODO: Wire to `authService.login` in T-01-13.
-      // For T-01-10, we just ensure the UI shows a proper loading state.
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      setSubmitError('Login is not connected yet. Please complete T-01-11/13.');
+      const result = await login(email, password);
+      if (!result.success) {
+        setSubmitError(result.message);
+      }
     } finally {
       setIsSubmitting(false);
     }
