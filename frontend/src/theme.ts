@@ -10,6 +10,10 @@ export function createAppTheme(mode: 'light' | 'dark') {
         styleOverrides: {
           root: {
             textTransform: 'none',
+            borderRadius: 100,
+            minWidth: '85px',
+            minHeight: '40px',
+            fontSize: '14px',
           },
         },
       },

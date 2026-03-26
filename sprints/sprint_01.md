@@ -64,7 +64,7 @@
   - [x] **T-01-16: Know when the user is signed in**
     - Subscribe to Firebase auth state (e.g., `onAuthStateChanged`) via a small hook or layout wrapper so UI can show **Log out** only for authenticated users and hide or adjust it when signed out.
 
-  - [ ] **T-01-17: Log out control in the UI**
+  - [x] **T-01-17: Log out control in the UI**
     - Add a **Log out** action (Material-UI button or menu item) in a sensible place for the MVP (e.g., app bar on `HomePage` or a shared layout): disabled/loading while sign-out is in progress, inline or snackbar error if sign-out fails.
 
   - [ ] **T-01-18: Navigate after logout**

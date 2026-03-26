@@ -122,7 +122,7 @@ const LoginPage = () => {
               disabled={isSubmitting}
               startIcon={isSubmitting ? <CircularProgress size={16} color="inherit" /> : undefined}
             >
-              {isSubmitting ? 'Signing in…' : 'Next'}
+              {isSubmitting ? 'Signing in…' : 'Sign in'}
             </Button>
           </Stack>
         </Stack>
