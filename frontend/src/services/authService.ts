@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   deleteUser,
+  signInWithEmailAndPassword,
   updateProfile,
   type UserCredential,
 } from 'firebase/auth';
@@ -17,6 +18,10 @@ export type SignUpResult =
   | { success: true; user: UserCredential }
   | { success: false; message: string };
 
+export type LoginResult =
+  | { success: true; user: UserCredential }
+  | { success: false; message: string };
+
 const AUTH_ERROR_MESSAGES: Record<string, string> = {
   'auth/email-already-in-use': 'This email is already registered. Sign in instead.',
   'auth/weak-password':
@@ -28,6 +33,10 @@ const AUTH_ERROR_MESSAGES: Record<string, string> = {
   'auth/user-disabled': 'This account has been disabled. Contact support.',
   'auth/internal-error': 'Something went wrong on our end. Please try again.',
   'auth/invalid-credential': 'Invalid credentials. Check your email and password.',
+  'auth/user-not-found': 'No account found for this email. Create an account instead.',
+  'auth/wrong-password': 'Incorrect password. Please try again.',
+  'auth/account-exists-with-different-credential':
+    'This account uses a different sign-in method. Please sign in another way.',
 };
 
 const PROFILE_ERROR_MESSAGES: Record<string, string> = {
@@ -77,6 +86,19 @@ export const signUp = async (
     return { success: true, user: userCredential };
   } catch (error) {
     logAppError('signUp:auth', error);
+    const fbError = error as AuthError;
+    const message =
+      fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;
+    return { success: false, message };
+  }
+};
+
+export const login = async (email: string, password: string): Promise<LoginResult> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+    return { success: true, user: userCredential };
+  } catch (error) {
+    logAppError('login:auth', error);
     const fbError = error as AuthError;
     const message =
       fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;

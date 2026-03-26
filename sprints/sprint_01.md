@@ -40,6 +40,21 @@
 - **US-02: Log in**
   - As a **registered user**, I want to log in with my email and password so that I can access my personal training plans.
 
+  - [x] **T-01-10: Implement login UI**
+    - Create `LoginPage` with email/password inputs, validation, and loading state.
+
+  - [x] **T-01-11: Add Firebase login service**
+    - Implement `authService.login` (Firebase `signInWithEmailAndPassword`) returning a typed result.
+
+  - [x] **T-01-12: Handle Firebase login errors**
+    - Map common Firebase login error codes to friendly messages; avoid sensitive output.
+
+  - [x] **T-01-13: Wire login form to auth**
+    - Submit calls `authService.login`, shows inline error UI on failure, and clears loading state on completion.
+
+  - [x] **T-01-14: Navigate after login**
+    - On success, redirect with React Router navigation (MVP: send user to `/`).
+
 - **US-03: Log out**
   - As a **logged‑in user**, I want to log out from my account so that I can prevent others from accessing my data on a shared device.
 
