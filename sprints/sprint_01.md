@@ -61,7 +61,7 @@
   - [x] **T-01-15: Add Firebase logout service**
     - Implement `authService.logout` using Firebase `signOut` on the shared `auth` instance; return a typed result (success vs. failure) and map or log errors consistently with `login` / `signUp` (no sensitive data in messages).
 
-  - [ ] **T-01-16: Know when the user is signed in**
+  - [x] **T-01-16: Know when the user is signed in**
     - Subscribe to Firebase auth state (e.g., `onAuthStateChanged`) via a small hook or layout wrapper so UI can show **Log out** only for authenticated users and hide or adjust it when signed out.
 
   - [ ] **T-01-17: Log out control in the UI**

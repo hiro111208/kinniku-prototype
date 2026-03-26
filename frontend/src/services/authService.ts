@@ -1,9 +1,11 @@
 import {
   createUserWithEmailAndPassword,
   deleteUser,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  type User,
   type UserCredential,
 } from 'firebase/auth';
 import { logAppError } from '../utils/clientLog';
@@ -24,6 +26,9 @@ export type LoginResult =
   | { success: false; message: string };
 
 export type LogoutResult = { success: true } | { success: false; message: string };
+
+export const subscribeAuthState = (onChange: (user: User | null) => void): (() => void) =>
+  onAuthStateChanged(auth, onChange);
 
 const AUTH_ERROR_MESSAGES: Record<string, string> = {
   'auth/email-already-in-use': 'This email is already registered. Sign in instead.',
