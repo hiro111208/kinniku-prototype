@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   deleteUser,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
   type UserCredential,
 } from 'firebase/auth';
@@ -21,6 +22,8 @@ export type SignUpResult =
 export type LoginResult =
   | { success: true; user: UserCredential }
   | { success: false; message: string };
+
+export type LogoutResult = { success: true } | { success: false; message: string };
 
 const AUTH_ERROR_MESSAGES: Record<string, string> = {
   'auth/email-already-in-use': 'This email is already registered. Sign in instead.',
@@ -99,6 +102,19 @@ export const login = async (email: string, password: string): Promise<LoginResul
     return { success: true, user: userCredential };
   } catch (error) {
     logAppError('login:auth', error);
+    const fbError = error as AuthError;
+    const message =
+      fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;
+    return { success: false, message };
+  }
+};
+
+export const logout = async (): Promise<LogoutResult> => {
+  try {
+    await signOut(auth);
+    return { success: true };
+  } catch (error) {
+    logAppError('logout:auth', error);
     const fbError = error as AuthError;
     const message =
       fbError?.code != null ? getAuthErrorMessage(fbError.code) : DEFAULT_ERROR_MESSAGE;

@@ -58,7 +58,7 @@
 - **US-03: Log out**
   - As a **logged‑in user**, I want to log out from my account so that I can prevent others from accessing my data on a shared device.
 
-  - [ ] **T-01-15: Add Firebase logout service**
+  - [x] **T-01-15: Add Firebase logout service**
     - Implement `authService.logout` using Firebase `signOut` on the shared `auth` instance; return a typed result (success vs. failure) and map or log errors consistently with `login` / `signUp` (no sensitive data in messages).
 
   - [ ] **T-01-16: Know when the user is signed in**
