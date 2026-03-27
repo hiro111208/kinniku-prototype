@@ -237,7 +237,7 @@ const SignupPage = () => {
 
           {/* Footer actions */}
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Link component={RouterLink} to="/login" underline="hover" variant="body2">
+            <Link component={RouterLink} to="/signin" underline="hover" variant="body2">
               Sign in instead
             </Link>
             <Button

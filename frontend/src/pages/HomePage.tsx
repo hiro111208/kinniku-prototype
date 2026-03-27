@@ -77,7 +77,7 @@ const HomePage = () => {
           </Box>
         ) : !user ? (
           <Typography variant="body1" color="text.secondary">
-            <Link component={RouterLink} to="/login" underline="hover">
+            <Link component={RouterLink} to="/signin" underline="hover">
               Sign in
             </Link>{' '}
             to continue.
