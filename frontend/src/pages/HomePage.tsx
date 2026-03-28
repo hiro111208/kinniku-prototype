@@ -1,35 +1,14 @@
-import {
-  Alert,
-  AppBar,
-  Box,
-  Button,
-  CircularProgress,
-  Link,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router';
+import { AppBar, Box, CircularProgress, Link, Toolbar, Typography } from '@mui/material';
+import { Link as RouterLink, Navigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
-import { logout } from '../services/authService';
+import { PATH_AFTER_AUTH, PATH_LOGIN } from '../routes/paths';
 
 const HomePage = () => {
   const { user, loading } = useAuth();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [logoutError, setLogoutError] = useState<string | null>(null);
 
-  const handleLogout = async () => {
-    setLogoutError(null);
-    setIsLoggingOut(true);
-    try {
-      const result = await logout();
-      if (!result.success) {
-        setLogoutError(result.message);
-      }
-    } finally {
-      setIsLoggingOut(false);
-    }
-  };
+  if (!loading && user) {
+    return <Navigate to={PATH_AFTER_AUTH} replace />;
+  }
 
   return (
     <Box
@@ -50,41 +29,20 @@ const HomePage = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Kinniku
           </Typography>
-          {!loading && user != null && (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              startIcon={isLoggingOut ? <CircularProgress size={16} color="inherit" /> : undefined}
-            >
-              {isLoggingOut ? 'Signing out…' : 'Log out'}
-            </Button>
-          )}
         </Toolbar>
       </AppBar>
 
       <Box component="main" sx={{ flex: 1, p: 3 }}>
-        {logoutError != null && (
-          <Alert severity="error" onClose={() => setLogoutError(null)} sx={{ mb: 2 }}>
-            {logoutError}
-          </Alert>
-        )}
-
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
             <CircularProgress />
           </Box>
-        ) : !user ? (
+        ) : (
           <Typography variant="body1" color="text.secondary">
-            <Link component={RouterLink} to="/signin" underline="hover">
+            <Link component={RouterLink} to={PATH_LOGIN} underline="hover">
               Sign in
             </Link>{' '}
             to continue.
-          </Typography>
-        ) : (
-          <Typography variant="body1" color="text.secondary">
-            You&apos;re signed in.
           </Typography>
         )}
       </Box>

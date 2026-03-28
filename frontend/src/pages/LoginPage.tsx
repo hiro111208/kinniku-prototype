@@ -11,9 +11,8 @@ import {
 } from '@mui/material';
 import { useState, type FormEvent } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router';
+import { PATH_AFTER_AUTH, PATH_SIGNUP } from '../routes/paths';
 import { login } from '../services/authService';
-
-const POST_LOGIN_PATH = '/';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -34,7 +33,7 @@ const LoginPage = () => {
         return;
       }
 
-      navigate(POST_LOGIN_PATH, { replace: true });
+      navigate(PATH_AFTER_AUTH, { replace: true });
     } finally {
       setIsSubmitting(false);
     }
@@ -113,7 +112,7 @@ const LoginPage = () => {
           )}
 
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Link component={RouterLink} to="/signup" underline="hover" variant="body2">
+            <Link component={RouterLink} to={PATH_SIGNUP} underline="hover" variant="body2">
               Create an account instead
             </Link>
             <Button
