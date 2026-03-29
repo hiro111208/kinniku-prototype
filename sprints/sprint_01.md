@@ -73,6 +73,38 @@
 - **US-04: Create training plan**
   - As a **logged‑in user**, I want to create a new training plan (with name, description, and basic settings) so that I can organize my workouts.
 
+  - [ ] **T-01-19: Decide training plan document shape and storage path**
+    - Align the product term **training plan** with the conceptual **`TRAINING_BLOCK`** in `docs/er_diagram.md` and training-block fields in `docs/requirements.md` §3.3: **name**, **start/end dates**, **planned days per week**.
+    - Add an optional **description** on the document for the user-story wording (not shown on the ER diagram) so **US-06** (details) and **US-07** (edit same fields) stay consistent.
+    - Choose a Firestore layout that makes **US-09** straightforward (e.g. subcollection under the authenticated user such as `users/{uid}/trainingPlans/{planId}` with `userId`/`ownerId` on the document for queries and rules).
+    - Include **server/client timestamps** (e.g. `createdAt`, `updatedAt`) so **US-05** can sort or filter plans later without rework.
+
+  - [ ] **T-01-20: TDD – validation for create-training-plan input**
+    - **Red**: unit tests for a small pure module (e.g. `validateTrainingPlanCreateInput`) covering required **name**, **startDate** / **endDate** ordering (end on or after start), sensible bounds for **plannedDaysPerWeek** (e.g. 1–7), and optional **description** constraints if you cap length.
+    - **Green**: implement the validator; reuse it from both the service layer and the form submit path so **US-07** can share the same rules later.
+
+  - [ ] **T-01-21: TDD – `trainingPlanService.create` (Firestore write)**
+    - **Red**: service tests with mocked Firestore (and mocked `auth` / current uid) asserting: rejects when there is no signed-in user; passes only validated input; written payload includes owner uid and timestamps; returns the new document id (or equivalent) for navigation.
+    - **Green**: implement `trainingPlanService.create` alongside existing Firebase patterns (see `userProfileService` / `firebase.ts`).
+    - **Refactor**: map Firestore errors to user-safe messages (no sensitive data), consistent with **US-01** / **US-02** auth error handling.
+
+  - [ ] **T-01-22: TDD – create-training-plan UI**
+    - **Red**: component tests for a **Create training plan** screen (or dialog): fields for name, description, and basic settings (dates + planned days per week); inline validation matches **T-01-20**; submit shows loading; failed create shows a friendly error; successful create invokes a callback or observable success path for routing tests.
+    - **Green**: implement the page with Material-UI, matching patterns from **SignupPage** / **LoginPage** (controlled fields, accessibility labels).
+
+  - [ ] **T-01-23: Protected route and discovery entry**
+    - **Red**: router test that unauthenticated access to the create route redirects or is blocked per **ProtectedLayout** (depends on **US-01**–**US-03**); authenticated user can reach the create flow.
+    - **Green**: register a route (e.g. `/plans/new`) under the protected shell; add a clear entry point from the post-login home or a placeholder plans hub so **US-05** can later replace/enhance navigation without changing the create URL.
+
+  - [ ] **T-01-24: Post-create navigation (feeds US-05 / US-06)**
+    - **Red**: test that after a successful create, the app navigates to a stable target—prefer **`/plans/:planId`** to support **US-06** when that route exists; if the detail route is not implemented yet, document a temporary redirect to `/` or `/plans` and add a follow-up task under **US-06** to switch the target.
+    - **Green**: wire `useNavigate` (or equivalent) on success with the id from **T-01-21**.
+
+  - [ ] **T-01-25: Owner-only create in Firestore rules (supports US-09)**
+    - **Red**: where possible, rules unit tests or emulator-based tests that reject creates under another user’s path and allow creates under `request.auth.uid`.
+    - **Green**: update Firestore security rules so training plans are only creatable/readable/updatable/deletable by their owner; keep **US-08** / **US-07** in mind so rules stay path-based and do not hard-code only “create”.
+    - Note: **US-10** (per-set done) applies to planned work inside a plan and does not need to be implemented in **US-04**; creating the plan document is enough to unblock list, detail, edit, and later workout UI.
+
 - **US-05: View list of training plans**
   - As a **logged‑in user**, I want to see a list of my training plans so that I can quickly find and open an existing plan.
 
