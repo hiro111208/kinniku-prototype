@@ -58,6 +58,18 @@
 - **US-03: Log out**
   - As a **logged‑in user**, I want to log out from my account so that I can prevent others from accessing my data on a shared device.
 
+  - [x] **T-01-15: Add Firebase logout service**
+    - Implement `authService.logout` using Firebase `signOut` on the shared `auth` instance; return a typed result (success vs. failure) and map or log errors consistently with `login` / `signUp` (no sensitive data in messages).
+
+  - [x] **T-01-16: Know when the user is signed in**
+    - Subscribe to Firebase auth state (e.g., `onAuthStateChanged`) via a small hook or layout wrapper so UI can show **Log out** only for authenticated users and hide or adjust it when signed out.
+
+  - [x] **T-01-17: Log out control in the UI**
+    - Add a **Log out** action (Material-UI button or menu item) in a sensible place for the MVP (e.g., app bar on `HomePage` or a shared layout): disabled/loading while sign-out is in progress, inline or snackbar error if sign-out fails.
+
+  - [ ] **T-01-18: Navigate after logout**
+    - On successful logout, redirect with React Router (e.g., `useNavigate`) to `/login` or a public landing route so the session is clearly ended on a shared device.
+
 - **US-04: Create training plan**
   - As a **logged‑in user**, I want to create a new training plan (with name, description, and basic settings) so that I can organize my workouts.
 
