@@ -94,14 +94,15 @@
   - [x] **T-01-22: TDD – create-training-plan UI**
     - **Red**: component tests for a **Create training plan** screen (or dialog): fields for **name**, optional **description**, **start** / **end** dates, and **planned days per week** (the fields that populate **`TRAINING_BLOCK`**); inline validation matches **T-01-20**; submit shows loading; failed create shows a friendly error; successful create invokes a callback or observable success path for routing tests.
     - **Green**: implement the page with Material-UI, matching patterns from **SignupPage** / **LoginPage** (controlled fields, accessibility labels).
-    - **Done:** `CreateTrainingPlanPage` (`frontend/src/pages/CreateTrainingPlanPage.tsx`) + `CreateTrainingPlanPage.test.tsx`; uses `validateTrainingPlanCreateInput` + `trainingPlanService.create`; optional **`onCreateSuccess`** for tests; production navigates to **`pathToTrainingPlan(id)`** after create. Route **`PATH_PLANS_NEW`** (`/plans/new`) registered under **`ProtectedLayout`** in `router.tsx` so the screen is reachable (**T-01-23** still adds discovery + auth routing tests).
+    - **Done:** `CreateTrainingPlanPage` (`frontend/src/pages/CreateTrainingPlanPage.tsx`) + `CreateTrainingPlanPage.test.tsx`; uses `validateTrainingPlanCreateInput` + `trainingPlanService.create`; optional **`onCreateSuccess`** for tests; production navigates to **`pathToTrainingPlan(id)`** after create. Route **`PATH_PLANS_NEW`** (`/plans/new`) registered under **`ProtectedLayout`** in `router.tsx`.
 
-  - [ ] **T-01-23: Protected route and discovery entry**
+  - [x] **T-01-23: Protected route and discovery entry**
     - **Red**: router test that unauthenticated access to the create route redirects or is blocked per **ProtectedLayout** (depends on **US-01**–**US-03**); authenticated user can reach the create flow.
-    - **Green**: register a route (e.g. `/plans/new` or `/training-blocks/new`) under the protected shell; add a clear entry point from the post-login home or a placeholder plans hub so **US-05** can later replace/enhance navigation without changing the create URL.
+    - **Green**: register a route (e.g. `/plans/new`) under the protected shell; add a clear entry point from the post-login home or a placeholder plans hub so **US-05** can later replace/enhance navigation without changing the create URL.
+    - **Done:** **`ProtectedLayout.test.tsx`** covers **`PATH_PLANS_NEW`**: guests redirect to **`PATH_HOME`**; signed-in users see the create outlet. **`PATH_PLANS_NEW`** is registered in **`router.tsx`**. Discovery: **`Dashboard`** button + **`Sidebar`** link to **`/plans/new`**; **`Dashboard.test.tsx`** asserts the href.
 
   - [ ] **T-01-24: Post-create navigation (feeds US-05 / US-06)**
-    - **Red**: test that after a successful create, the app navigates to a stable target—prefer **`/plans/:planId`** (or **`/training-blocks/:blockId`**) to support **US-06** when that route exists; if the detail route is not implemented yet, document a temporary redirect to `/` or `/plans` and add a follow-up task under **US-06** to switch the target.
+    - **Red**: test that after a successful create, the app navigates to a stable target—prefer **`/plans/:planId`** to support **US-06** when that route exists; if the detail route is not implemented yet, document a temporary redirect to `/` or `/plans` and add a follow-up task under **US-06** to switch the target.
     - **Green**: wire `useNavigate` (or equivalent) on success with the id from **T-01-21**.
 
   - [ ] **T-01-25: Owner-only create in Firestore rules (supports US-09)**

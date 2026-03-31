@@ -1,12 +1,20 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import HomeIcon from '@mui/icons-material/Home';
 import ProfileIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Box, Button, CircularProgress, Link, Stack } from '@mui/material';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router';
-import { PATH_AFTER_AUTH, PATH_DASHBOARD, PATH_HOME, PATH_PROFILE, PATH_SETTINGS } from '../routes/paths';
+import {
+  PATH_AFTER_AUTH,
+  PATH_DASHBOARD,
+  PATH_HOME,
+  PATH_PLANS_NEW,
+  PATH_PROFILE,
+  PATH_SETTINGS,
+} from '../routes/paths';
 import { logout } from '../services/authService';
 
 const Sidebar = () => {
@@ -50,6 +58,12 @@ const Sidebar = () => {
         <DashboardIcon fontSize="small" />
         <Link component={RouterLink} to={PATH_DASHBOARD}>
           Dashboard
+        </Link>
+      </Stack>
+      <Stack direction="row" spacing={2} alignItems="center">
+        <FitnessCenterIcon fontSize="small" />
+        <Link component={RouterLink} to={PATH_PLANS_NEW}>
+          New training plan
         </Link>
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">

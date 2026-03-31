@@ -1,4 +1,6 @@
-import { Typography, Box, Toolbar, AppBar } from '@mui/material';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router';
+import { PATH_PLANS_NEW } from '../routes/paths';
 
 const Dashboard = () => {
   return (
@@ -15,6 +17,15 @@ const Dashboard = () => {
           </Typography>
         </Toolbar>
       </AppBar>
+
+      <Box component="main" sx={{ px: 2, pb: 3, pt: 1 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Training plans you create will appear in a list view in a future update.
+        </Typography>
+        <Button component={RouterLink} to={PATH_PLANS_NEW} variant="contained">
+          New training plan
+        </Button>
+      </Box>
     </Box>
   );
 };
