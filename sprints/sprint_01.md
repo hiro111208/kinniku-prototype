@@ -85,10 +85,11 @@
     - **Green**: implement the validator; reuse it from both the service layer and the form submit path so **US-07** can share the same rules later.
     - **Done:** `frontend/src/utils/validateTrainingPlanCreateInput.ts` + `validateTrainingPlanCreateInput.test.ts`; normalized `ValidatedTrainingPlanCreateInput` uses **`YYYY-MM-DD`** strings; description max **5000** characters.
 
-  - [ ] **T-01-21: TDD – `trainingPlanService.create` (Firestore write)**
+  - [x] **T-01-21: TDD – `trainingPlanService.create` (Firestore write)**
     - **Red**: service tests with mocked Firestore (and mocked `auth` / current uid) asserting: rejects when there is no signed-in user; passes only validated input; written document matches **`TRAINING_BLOCK`** fields (`user_id`, `name`, `start_date`, `end_date`, `planned_days_per_week`, optional `description`) plus timestamps; returns the new document id for navigation.
     - **Green**: implement `trainingPlanService.create` alongside existing Firebase patterns (see `userProfileService` / `firebase.ts`).
     - **Refactor**: map Firestore errors to user-safe messages (no sensitive data), consistent with **US-01** / **US-02** auth error handling.
+    - **Done:** `frontend/src/services/trainingPlanService.ts` (`trainingPlanService.create`) + `trainingPlanService.test.ts`; writes camelCase fields (`userId`, `startDate`/`endDate` as `Timestamp`, etc.); uses `validateTrainingPlanCreateInput`; logs via `logAppError` on write failure.
 
   - [ ] **T-01-22: TDD – create-training-plan UI**
     - **Red**: component tests for a **Create training plan** screen (or dialog): fields for **name**, optional **description**, **start** / **end** dates, and **planned days per week** (the fields that populate **`TRAINING_BLOCK`**); inline validation matches **T-01-20**; submit shows loading; failed create shows a friendly error; successful create invokes a callback or observable success path for routing tests.
