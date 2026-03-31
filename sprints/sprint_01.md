@@ -80,9 +80,10 @@
     - **Decision:** Firestore path **`users/{uid}/trainingBlocks/{blockId}`** with **`userId`** on the document (camelCase, consistent with `ExerciseFirestore` / frontend conventions); rules can require `request.auth.uid == userId` and path `uid` to match. Implemented as `TrainingBlockFirestore` in `frontend/src/types/trainingBlock.ts` and `trainingBlocksCollectionRef` / `trainingBlockDocRef` in `frontend/src/services/trainingBlockRefs.ts`.
     - Include **server/client timestamps** **`createdAt`** / **`updatedAt`** (`Timestamp`) for ordering in **US-05** even though they are not on the conceptual ER (implementation metadata). **`startDate`** / **`endDate`** are stored as **`Timestamp`** for range queries; calendar-day semantics belong in validation (**T-01-20**).
 
-  - [ ] **T-01-20: TDD – validation for create-training-plan input**
+  - [x] **T-01-20: TDD – validation for create-training-plan input**
     - **Red**: unit tests for a small pure module (e.g. `validateTrainingPlanCreateInput`) covering required **`name`**, **`start_date`** / **`end_date`** ordering (end on or after start), sensible bounds for **`planned_days_per_week`** (1–7, aligned with the ER `int`), and optional **`description`** constraints if you cap length.
     - **Green**: implement the validator; reuse it from both the service layer and the form submit path so **US-07** can share the same rules later.
+    - **Done:** `frontend/src/utils/validateTrainingPlanCreateInput.ts` + `validateTrainingPlanCreateInput.test.ts`; normalized `ValidatedTrainingPlanCreateInput` uses **`YYYY-MM-DD`** strings; description max **5000** characters.
 
   - [ ] **T-01-21: TDD – `trainingPlanService.create` (Firestore write)**
     - **Red**: service tests with mocked Firestore (and mocked `auth` / current uid) asserting: rejects when there is no signed-in user; passes only validated input; written document matches **`TRAINING_BLOCK`** fields (`user_id`, `name`, `start_date`, `end_date`, `planned_days_per_week`, optional `description`) plus timestamps; returns the new document id for navigation.
