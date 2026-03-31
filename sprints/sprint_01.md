@@ -91,9 +91,10 @@
     - **Refactor**: map Firestore errors to user-safe messages (no sensitive data), consistent with **US-01** / **US-02** auth error handling.
     - **Done:** `frontend/src/services/trainingPlanService.ts` (`trainingPlanService.create`) + `trainingPlanService.test.ts`; writes camelCase fields (`userId`, `startDate`/`endDate` as `Timestamp`, etc.); uses `validateTrainingPlanCreateInput`; logs via `logAppError` on write failure.
 
-  - [ ] **T-01-22: TDD – create-training-plan UI**
+  - [x] **T-01-22: TDD – create-training-plan UI**
     - **Red**: component tests for a **Create training plan** screen (or dialog): fields for **name**, optional **description**, **start** / **end** dates, and **planned days per week** (the fields that populate **`TRAINING_BLOCK`**); inline validation matches **T-01-20**; submit shows loading; failed create shows a friendly error; successful create invokes a callback or observable success path for routing tests.
     - **Green**: implement the page with Material-UI, matching patterns from **SignupPage** / **LoginPage** (controlled fields, accessibility labels).
+    - **Done:** `CreateTrainingPlanPage` (`frontend/src/pages/CreateTrainingPlanPage.tsx`) + `CreateTrainingPlanPage.test.tsx`; uses `validateTrainingPlanCreateInput` + `trainingPlanService.create`; optional **`onCreateSuccess`** for tests; production navigates to **`pathToTrainingPlan(id)`** after create. Route **`PATH_PLANS_NEW`** (`/plans/new`) registered under **`ProtectedLayout`** in `router.tsx` so the screen is reachable (**T-01-23** still adds discovery + auth routing tests).
 
   - [ ] **T-01-23: Protected route and discovery entry**
     - **Red**: router test that unauthenticated access to the create route redirects or is blocked per **ProtectedLayout** (depends on **US-01**–**US-03**); authenticated user can reach the create flow.

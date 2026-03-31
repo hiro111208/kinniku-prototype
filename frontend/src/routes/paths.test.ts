@@ -4,9 +4,11 @@ import {
   PATH_DASHBOARD,
   PATH_HOME,
   PATH_LOGIN,
+  PATH_PLANS_NEW,
   PATH_PROFILE,
   PATH_SETTINGS,
   PATH_SIGNUP,
+  pathToTrainingPlan,
 } from "./paths.ts";
 
 describe("paths", () => {
@@ -21,5 +23,7 @@ describe("paths", () => {
     expect(PATH_SIGNUP).toBe("/signup");
     expect(PATH_PROFILE).toBe("/profile");
     expect(PATH_SETTINGS).toBe("/settings");
+    expect(PATH_PLANS_NEW).toBe("/plans/new");
+    expect(pathToTrainingPlan("abc")).toBe("/plans/abc");
   });
 });

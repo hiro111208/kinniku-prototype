@@ -14,3 +14,8 @@ export const PATH_SIGNUP = '/signup';
 export const PATH_PROFILE = '/profile';
 
 export const PATH_SETTINGS = '/settings';
+
+/** Create a new training block (plan). */
+export const PATH_PLANS_NEW = '/plans/new';
+
+export const pathToTrainingPlan = (planId: string) => `/plans/${planId}`;
