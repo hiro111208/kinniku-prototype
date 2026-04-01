@@ -101,9 +101,10 @@
     - **Green**: register a route (e.g. `/plans/new`) under the protected shell; add a clear entry point from the post-login home or a placeholder plans hub so **US-05** can later replace/enhance navigation without changing the create URL.
     - **Done:** **`ProtectedLayout.test.tsx`** covers **`PATH_PLANS_NEW`**: guests redirect to **`PATH_HOME`**; signed-in users see the create outlet. **`PATH_PLANS_NEW`** is registered in **`router.tsx`**. Discovery: **`Dashboard`** button + **`Sidebar`** link to **`/plans/new`**; **`Dashboard.test.tsx`** asserts the href.
 
-  - [ ] **T-01-24: Post-create navigation (feeds US-05 / US-06)**
+  - [x] **T-01-24: Post-create navigation (feeds US-05 / US-06)**
     - **Red**: test that after a successful create, the app navigates to a stable target—prefer **`/plans/:planId`** to support **US-06** when that route exists; if the detail route is not implemented yet, document a temporary redirect to `/` or `/plans` and add a follow-up task under **US-06** to switch the target.
     - **Green**: wire `useNavigate` (or equivalent) on success with the id from **T-01-21**.
+    - **Done:** **`PATH_PLAN_DETAIL`** (`/plans/:planId`) + placeholder **`TrainingPlanDetailPage`** (feeds **US-06**); registered under **`ProtectedLayout`** before the catch-all. **`CreateTrainingPlanPage`** calls **`navigate(pathToTrainingPlan(blockId), { replace: true })`** after create. **`CreateTrainingPlanPage.test.tsx`** asserts navigation to the detail screen with the new id.
 
   - [ ] **T-01-25: Owner-only create in Firestore rules (supports US-09)**
     - **Red**: where possible, rules unit tests or emulator-based tests that reject creates where **`user_id`** (or path owner) does not match `request.auth.uid`, and allow creates when it does.

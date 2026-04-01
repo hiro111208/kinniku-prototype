@@ -5,6 +5,7 @@ import {
   PATH_HOME,
   PATH_LOGIN,
   PATH_PLANS_NEW,
+  PATH_PLAN_DETAIL,
   PATH_PROFILE,
   PATH_SETTINGS,
   PATH_SIGNUP,
@@ -24,6 +25,7 @@ describe("paths", () => {
     expect(PATH_PROFILE).toBe("/profile");
     expect(PATH_SETTINGS).toBe("/settings");
     expect(PATH_PLANS_NEW).toBe("/plans/new");
+    expect(PATH_PLAN_DETAIL).toBe("/plans/:planId");
     expect(pathToTrainingPlan("abc")).toBe("/plans/abc");
   });
 });

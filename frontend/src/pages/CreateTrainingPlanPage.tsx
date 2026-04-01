@@ -89,7 +89,7 @@ const CreateTrainingPlanPage = ({ onCreateSuccess }: CreateTrainingPlanPageProps
       return;
     }
 
-    navigate(pathToTrainingPlan(result.blockId));
+    navigate(pathToTrainingPlan(result.blockId), { replace: true });
   };
 
   return (

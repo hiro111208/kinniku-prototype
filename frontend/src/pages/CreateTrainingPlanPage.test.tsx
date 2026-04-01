@@ -1,10 +1,11 @@
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { PATH_PLANS_NEW } from '../routes/paths.ts';
+import { PATH_PLAN_DETAIL, PATH_PLANS_NEW } from '../routes/paths.ts';
 import { trainingPlanService } from '../services/trainingPlanService.ts';
 import { renderWithRouter } from '../test/muiRouter.tsx';
 import CreateTrainingPlanPage from './CreateTrainingPlanPage.tsx';
+import TrainingPlanDetailPage from './TrainingPlanDetailPage.tsx';
 
 vi.mock('../services/trainingPlanService.ts', () => ({
   trainingPlanService: {
@@ -102,6 +103,33 @@ describe('CreateTrainingPlanPage', () => {
     await waitFor(() => {
       expect(onCreateSuccess).toHaveBeenCalledWith('block-123');
     });
+  });
+
+  it('navigates to /plans/:planId after successful create when onCreateSuccess is not used', async () => {
+    const user = userEvent.setup();
+    vi.mocked(trainingPlanService.create).mockResolvedValue({
+      success: true,
+      blockId: 'new-block-xyz',
+    });
+
+    const view = renderWithRouter(
+      [
+        { path: PATH_PLANS_NEW, element: <CreateTrainingPlanPage /> },
+        { path: PATH_PLAN_DETAIL, element: <TrainingPlanDetailPage /> },
+      ],
+      [PATH_PLANS_NEW],
+    );
+
+    await user.type(view.getByLabelText('Plan name'), 'Fall');
+    await user.type(view.getByLabelText('Start date'), '2026-09-01');
+    await user.type(view.getByLabelText('End date'), '2026-11-30');
+    await user.type(view.getByLabelText('Planned days per week'), '3');
+    await user.click(view.getByRole('button', { name: /create plan$/i }));
+
+    await waitFor(() => {
+      expect(view.getByTestId('training-plan-detail')).toBeInTheDocument();
+    });
+    expect(view.getByText(/Plan ID:\s*new-block-xyz/)).toBeInTheDocument();
   });
 
   it('disables submit and shows loading while create is in progress', async () => {

@@ -8,11 +8,13 @@ import Profile from './pages/Profile.tsx';
 import Settings from './pages/Settings.tsx';
 import CreateTrainingPlanPage from './pages/CreateTrainingPlanPage.tsx';
 import SignupPage from './pages/SignupPage.tsx';
+import TrainingPlanDetailPage from './pages/TrainingPlanDetailPage.tsx';
 import {
   PATH_DASHBOARD,
   PATH_HOME,
   PATH_LOGIN,
   PATH_PLANS_NEW,
+  PATH_PLAN_DETAIL,
   PATH_PROFILE,
   PATH_SETTINGS,
   PATH_SIGNUP,
@@ -25,6 +27,7 @@ const router = createBrowserRouter([
     children: [
       { path: PATH_DASHBOARD, element: <Dashboard /> },
       { path: PATH_PLANS_NEW, element: <CreateTrainingPlanPage /> },
+      { path: PATH_PLAN_DETAIL, element: <TrainingPlanDetailPage /> },
       { path: PATH_PROFILE, element: <Profile /> },
       { path: PATH_SETTINGS, element: <Settings /> },
     ],
